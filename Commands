@@ -21,6 +21,7 @@ nmap -sV -sC -p- -Pn 10.10.10.49 --min-rate=10000
   john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt hash.txt
   
   hydra -l admin -P rockyou.txt 10.10.10.75 http-post-form "nibleblog/admin.php:username=^USER^&password=^PASS^:Incorrect username"
+  hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.10.10.43 http-post-form "/department/login.php:username=^USER^&password=^PASS^:Invalid" -t 64
   
 
 ************************************************************* comandos para después de obtener una shell**
@@ -58,6 +59,12 @@ gobuster dir -u http://10.10.10.29/ -w /usr/share/wordlists/dirb/common.txt
 dirb http://10.10.10.6
 gobuster dir -u http://10.10.10.6 -w /usr/share/wordlists/dirb/big.txt
 gobuster dir -u https://10.10.10.7/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 -k
+
+scan extensions files
+gobuster -w /usr/share/wordlists/dirb/small.txt dir --url http://10.10.10.56/cgi-bin- s 200,204,301,302,307,401,403 -x sh,pl
+
+Para saltar los avisos ssl
+gobuster dir --url https://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-small.txt -k
 
 scan files & folders
 
