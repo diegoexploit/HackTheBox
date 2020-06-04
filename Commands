@@ -150,6 +150,17 @@ sqlplus scott/tiger@10.10.10.82:1521/XE
 NOTA: La máquina de HTB Silo, describe muy bien el procedimiento
 https://www.youtube.com/watch?v=2c7SzNo9uoA&feature=emb_title
 
+*************************************Buscar archivos con private key********************
+ find / -xdev -type f -print0 | xargs -0 grep -H "BEGIN RSA PRIVATE KEY"
+ **********************************monitorear crontabs
+ ./pspy64
+ ***********************************iptables***************************
+ iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j REJECT
+netfilter-persistent save
+netfilter-persistent reload
+
+
 
 
 
