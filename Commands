@@ -7,6 +7,7 @@ nmap -sU -v 10.10.10.55
 nmap -sV -sC -p- -Pn 10.10.10.49 --min-rate=10000
 
 nmap -p 10,20,30 -sC -sV --script vuln ip --> escaneo vulnerabilidades full.
+nmap -p 22,80 -sC -sV -oA posion2 --script vuln --stylesheet nmap-bootstrap.xsl 10.10.10.84
 
 ***************************************************************Cracking password**
 
