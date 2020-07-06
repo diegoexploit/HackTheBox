@@ -82,6 +82,7 @@ gobuster -w /usr/share/wordlists/dirb/small.txt dir --url http://10.10.10.56/cgi
 
 Para saltar los avisos ssl
 gobuster dir --url https://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-small.txt -k
+gobuster -e -k -u https://brainfuck.htb/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 40 -x .php,.txt,.html -s "200" -a CustomAgent -o reportgobuster10.10.10.17.txt
 
 scan files & folders
 
