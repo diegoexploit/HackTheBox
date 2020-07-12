@@ -154,6 +154,8 @@ Crear una unidad de red para compartir con usuario y contraseña.
 impacket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
 Crear una unidad de red para compartir sin usuario y contraseña.
 impacket-smbserver www $(pwd) -smb2support
+
+smbmap -H 10.10.10.123 -R --depth 5
 *********************************************************Tunnel ssh ****************************************
 ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
 L9000: Puerto local a publicar
