@@ -1,0 +1,3 @@
+sudo /etc/init.d/iptables-persistent save 
+sudo /etc/init.d/iptables-persistent reload
+iptables -I INPUT -p tcp -m tcp --dport  -j ACCEPT
