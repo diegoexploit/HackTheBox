@@ -38,6 +38,10 @@ xsltproc -o poison2.html nmap-bootstrap.xsl poison2.xml
  
  seleccionar las palabras de menos de 8 caracteres
  cat dictionary2.txt | sort -u | awk 'length($0) > 8' | wc -l > dictionary2.txt
+ 
+ md5
+ 
+ >hashcat.exe -m 0  3cc31cd246149aec68079241e71e98f6  rockyou.txt
 
 
 ************************************************************* comandos para después de obtener una shell**
