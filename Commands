@@ -182,6 +182,9 @@ sqlplus scott/tiger@10.10.10.82:1521/XE
 NOTA: La máquina de HTB Silo, describe muy bien el procedimiento
 https://www.youtube.com/watch?v=2c7SzNo9uoA&feature=emb_title
 
+Montar disco duro virtual
+guestmount --add fil-vhd --inspector --ro -v /mnt/vhd
+
 *************************************Buscar archivos ********************
 private key
  find / -xdev -type f -print0 | xargs -0 grep -H "BEGIN RSA PRIVATE KEY"
@@ -360,4 +363,11 @@ python chisel server 9002 --reverse
 *******************************************Compilando con gcc********************
 apt install gcc-multilib 
 gcc -m32 -o setuid setuid.c
+
+*****************************************Comprimir y descomprimir*********************
+7z ls file
+
+****************************************SAM**********************************************
+
+impacket-secretsdump -sam SAM -system SYSTEM local
 
