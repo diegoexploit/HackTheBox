@@ -375,3 +375,10 @@ gcc -m32 -o setuid setuid.c
 
 impacket-secretsdump -sam SAM -system SYSTEM local
 
+****************************************esteganografia*************************************
+steghide extract -sf  imagen.jpeg -p paswword
+
+Crackear password de imagen con steganography
+stegcracker imagen.jpeg
+
+
