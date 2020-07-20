@@ -1,0 +1,17 @@
+Es una raspberry que tiene acceso por el puerto 22 con pi:rasperry credentials.
+
+Al revisar el comando id muestra que es usuario máximo, 
+
+la ir a buscar las flags, se encuentra que no hay acceso al /root, así que ejecutando el comando df -h se evidencia que hay una mmemoria usb conectada, pero dentro de ella no hay nada, 
+fue eliminado todo su contenido.
+
+Ejecutando el comando strings sobre el punto de montaje revela información de la bandera.
+
+sudo strings /deb/sdb
+
+Otra manera es haciendo una imagen del disco usb en /home/bi con el comando
+
+sudo dcfldd if=/dev/sdb of=/home/pi/usb.dd
+
+se descarga con scp pi@10.10.10.48:/home/bi/usb.dd pero al revisar el archivo no se logra evidenciar información, sin embargo, al ejecutar strings sobre el archivo revela información
+acerca de la bandera.
