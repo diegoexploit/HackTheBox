@@ -394,3 +394,5 @@ copiar local al servidor
 scp archivo.txt user@10.10.10.48:/home/usr/
 copiar del servidor al local
 scp user@10.10.10.48:/home/pi/usb.dd .
+*********************************************montar imagenes o sacar imagenes de dispositivos****************************************
+sudo dcfldd if=/dev/sdb of=/home/pi/usb.dd
