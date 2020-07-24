@@ -1,0 +1,4 @@
+gobuster
+for i in http://10.10.10.40 http://10.10.10.20; do gobuster dir --url $i -w /usr/share/dirb/wordlists/common.txt -t 50 - x php ; done
+nmap 
+for i in 10.10.10.40 10.10.10.20; do nmap -p- -sC -sV -vvv --script vuln --stylesheet nmap-bootstrap.xsl -oA nmap-$i; done
