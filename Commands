@@ -439,3 +439,7 @@ sudo /bin/nano /opt/ona
 control + r y luego control + x
 Luego se escribe lo siguiente:
 reset; sh 1>&0 2>&0
+********************************************extracción de metadata***************************************************
+
+metagoofil -d fiducentral.com  -t pdf,docx -l 400 -n 400 -o /home/kali/fiducentral/metadata/
+cat extract.html | grep -i Author | cut -d ":" -f 2 | sort -u
