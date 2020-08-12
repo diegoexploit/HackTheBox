@@ -164,6 +164,7 @@ lxc exec ignite /bin/sh
 **********************************************************smb************************************************
 smbclient -N -L \\10.10.10.27\\
 smbclient -N \\10.10.10.27\backups
+smbclient  -N \\\\10.11.1.231\\home
 
 Crear una unidad de red para compartir con usuario y contraseña.
 impacket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
