@@ -383,6 +383,7 @@ python chisel server 9002 --reverse
 *******************************************Compilando con gcc********************
 apt install gcc-multilib 
 gcc -m32 -o setuid setuid.c
+gcc -o salida file.c
 
 *****************************************Comprimir y descomprimir*********************
 7z ls file
