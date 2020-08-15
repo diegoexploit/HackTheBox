@@ -171,6 +171,9 @@ impacket-smbserver Sfire $(pwd) -smb2support -user diego -password Contrasenia
 Crear una unidad de red para compartir sin usuario y contraseña.
 impacket-smbserver www $(pwd) -smb2support
 
+compartir carpeta desde linux
+smbserver.py SMB ~/osc/smb
+
 smbmap -H 10.10.10.123 -R --depth 5
 *********************************************************Tunnel ssh ****************************************
 ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
