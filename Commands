@@ -387,6 +387,8 @@ python chisel server 9002 --reverse
 apt install gcc-multilib 
 gcc -m32 -o setuid setuid.c
 gcc -o salida file.c
+i686-w64-mingw32-gcc 42341.c -o syncbreeze_exploit.exe
+i686-w64-mingw32-gcc 42341.c -o syncbreeze_exploit.exe -lws2_32 --> esta última opción compila el código reparando los problema que encuentre.
 
 *****************************************Comprimir y descomprimir*********************
 7z ls file
