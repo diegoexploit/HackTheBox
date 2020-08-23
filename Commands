@@ -50,6 +50,13 @@ crackear un id_rsa
 ssh3john id_rsa > hash
 john hash --wordlist=/usr/share/wordlist/rockyou.txt
 
+crack tgt y tgs de window en linux funciona.
+
+hashcat -m 13100 -o capture.cracked -a 0 hash.txt /usr/share/wordlists/rockyou.txt --force --potfile-disable
+
+en windows
+
+
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
 
