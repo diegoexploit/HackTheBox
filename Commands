@@ -56,6 +56,13 @@ hashcat -m 13100 -o capture.cracked -a 0 hash.txt /usr/share/wordlists/rockyou.t
 
 en windows
 
+crack passwords MD5 wordpress, se reconocen porque empiezan por $H o $P
+windows  hashcat.exe -O -m 400 -a 0 -o cracket.txt pass.txt rockyou.txt
+linux hashcat -O -m 400 -a 0 -o ~/oscp/cracked.txt ~/oscp/capitulo24/pass.txt /usr/share/wordlists/rockyou.txt --force --potfile-disable
+john --wordlist=/usr/share/wordlists/rockyou.txt pass.txt
+
+NOTA en windows es mucho mas rápido. con hascat
+
 
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
