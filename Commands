@@ -485,4 +485,7 @@ gunzip access.log.txt.gz
          echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD... kali@kali" > /root/.ssh/authorized_keys
          
          Realizar la conexión desde kali
+         
+         ==============================hexadecimal decode=========================
+         echo -n "46 4c 34 36 5f 33 3a 32 396472796 63637756 8656874" | xxd -r -ps 
 
