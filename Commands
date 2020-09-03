@@ -63,6 +63,9 @@ john --wordlist=/usr/share/wordlists/rockyou.txt pass.txt
 
 NOTA en windows es mucho mas rápido. con hascat
 
+sha512 
+hashcat -m 1800 -a 0 -o cracked.txt passwords.txt /usr/share/wordlists/rockyou.txt --force --potfile-disable
+
 
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
