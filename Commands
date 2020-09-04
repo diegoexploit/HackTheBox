@@ -496,4 +496,6 @@ gunzip access.log.txt.gz
          
          ==============================hexadecimal decode=========================
          echo -n "46 4c 34 36 5f 33 3a 32 396472796 63637756 8656874" | xxd -r -ps 
-
+=================vulnerabilidades off line windows suggester=========
+python windows-exploit-suggester.py --update
+python windows-exploit-suggester.py --database 2020-09-04-mssb.xls sis.txt
