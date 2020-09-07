@@ -63,7 +63,7 @@ john --wordlist=/usr/share/wordlists/rockyou.txt pass.txt
 
 NOTA en windows es mucho mas rápido. con hascat
 
-sha512 
+sha512 es el hash de linux, el cual contiene 106 caracteres.
 hashcat -m 1800 -a 0 -o cracked.txt passwords.txt /usr/share/wordlists/rockyou.txt --force --potfile-disable
 
 ntlm 
