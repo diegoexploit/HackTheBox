@@ -11,6 +11,7 @@ nmap -p 22,80 -sC -sV -oA posion2 --script vuln --stylesheet nmap-bootstrap.xsl 
 xsltproc -o poison2.html nmap-bootstrap.xsl poison2.xml
 
 ***************************************************************Cracking password**
+cheatsheet john https://www.hackingarticles.in/beginners-guide-for-john-the-ripper-part-2/#:~:text=Cracking%20the%20SSH%20Password%20Hash,called%20%E2%80%9Cssh%2Dkeygen%E2%80%9D.
 
 1. Extract hash zip
   zip2john filezip
