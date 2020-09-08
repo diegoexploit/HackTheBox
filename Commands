@@ -248,6 +248,8 @@ Buscar root.txt linux
 find . -name *root.txt -exec wc -c {} \;
 find / -iname *.txt
 
+dir /ah archivos ocultos
+
  **********************************monitorear crontabs
  ./pspy64
  https://github.com/diegoexploit/HackTheBox/blob/master/monitoring.sh
@@ -412,6 +414,12 @@ gcc -m32 -o setuid setuid.c
 gcc -o salida file.c
 i686-w64-mingw32-gcc 42341.c -o syncbreeze_exploit.exe
 i686-w64-mingw32-gcc 42341.c -o syncbreeze_exploit.exe -lws2_32 --> esta última opción compila el código reparando los problema que encuentre.
+
+Cuato ponen problemas con la libreria en 32bits 686
+gcc -m32 -Wall -Wl,--hash-style=both -o
+gcc -m32 -Wl,--hash-style=both exploit.c -o exploit
+gcc -Wall -o linux-sendpage linux-sendpage.c
+
 
 *****************************************Comprimir y descomprimir*********************
 7z ls file
