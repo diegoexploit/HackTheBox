@@ -133,6 +133,8 @@ wpscan --url http://10.10.10.37 -e u,ap,tt,t  --api-token  hz6s59smi5hjaWUXjdx1b
 
 wfuzz -z file,/usr/share/seclists/Usernames/Names/names.txt -d "username=FUZZ&password=1234567" --hs "No account found with that username" http://10.10.10.97/login.php
 
+wfuzz --hc 404 -c -u http://10.11.1.35/FUZZ -w /usr/share/wordlists/dirb/common.txt
+
 ************************************************************Arquitectura de sistesmas operativos***************************
 
 Windows wmic OS get OSArchitecture
