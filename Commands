@@ -200,6 +200,10 @@ compartir carpeta desde linux
 smbserver.py SMB ~/osc/smb
 
 smbmap -H 10.10.10.123 -R --depth 5
+
+cuando se produce el error de negociacion de protocol
+smbclient -N -L //10.11.1.136/ --option='client min protocol=NT1'
+
 *********************************************************Tunnel ssh ****************************************
 ssh -i root.key -L9000:10.10.10.75:80 10.10.10.73
 L9000: Puerto local a publicar
