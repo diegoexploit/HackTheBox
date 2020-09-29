@@ -73,6 +73,12 @@ hashcat --user -m 1000 -o craced1.txt -a 0  10.1.11.31 rockyou.txt -r rules\Inci
 
 https://hashcat.net/wiki/doku.php?id=example_hashes
 
+shadow
+hashcat -m 500 -a 0 -o cracked.txt --force hash.txt 
+/usr/share/wordlists/sqlmap.txt
+
+
+
 ************************************************************* comandos para después de obtener una shell**
 Permiten que se pueda interactuar con la shell para poder usar las teclas subir bajar y digitar bien en editores de texto.
 
