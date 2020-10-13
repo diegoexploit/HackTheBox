@@ -43,6 +43,8 @@ cheatsheet john https://www.hackingarticles.in/beginners-guide-for-john-the-ripp
  md5
  
  >hashcat.exe -m 0  3cc31cd246149aec68079241e71e98f6  rockyou.txt
+ 
+ hashcat.exe  -a 0 -m 0  hash2.txt rockyou.txt -r rules/best64.rule
 
 Tipos de hashesh
 https://www.whitehatsec.com/blog/magic-hashes/
